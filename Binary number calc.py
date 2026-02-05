@@ -27,3 +27,39 @@ while number != 0:
 else:
     result = buffer
     print(result)
+
+"Var II"
+
+number = int(input("Введите число в десятичной системе: "))
+rest = number
+result = ""
+while rest != 1:
+    rest2 = rest
+    rest = rest // 2
+    rest2 = rest2 % 2
+    if rest2 % 2 == 1:
+        result = result + str(1)
+    else:
+        result = result + str(0)
+else:
+    result = str(result) + str(1)
+    result = int(result[::-1])
+    print(result)
+
+print("""Перевод обратно в десятичную.
+Или введи другое число в бинарном виде :).""")
+
+x = input("Введите число: ")
+multiplyer = 1
+res = 0
+
+for i in x[::-1]:
+    if i == "1":
+        i = int(i) * multiplyer
+        res = res + i
+    else:
+        multiplyer *= 2
+        continue
+    multiplyer *= 2
+
+print(f"Число в десятичной: {res}")
