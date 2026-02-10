@@ -6,14 +6,25 @@ charact = ord(charact)
 
 print(f"Код Unicode: {charact}")
 
+"Var I"
+# if charact <= 127:
+#     ascii = True
+# else:
+#     ascii = False
+#
+# if 128 <= charact <= 255:
+#     ascii2 = True
+# else:
+#     ascii2 = False
+"Var II"
 if charact <= 127:
     ascii = True
-else:
+    ascii2 = False
+elif charact <= 255:
     ascii = False
-
-if 128 <= charact <= 255:
     ascii2 = True
 else:
+    ascii = False
     ascii2 = False
 
 print(f"ASCII символ: {ascii}")
@@ -102,3 +113,6 @@ while count != 0:
     right = right - 1
 
 print(f"Расшифрованный текст: {buffer[::-1]}")
+
+# Если ввести hellloy с шагом 4 то в выводе получим lippps} , забавная пасхалка :DD
+# Случайно обнаружил :)

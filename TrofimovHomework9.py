@@ -11,14 +11,7 @@ multiplyer = 1
 if number <= 50:
     for high in range(1, number + 1):
         for width in range(1, number + 1):
-            if width * multiplyer >= 10:
-                print(width * multiplyer, end="    ")
-            elif width * multiplyer >= 100:
-                print(width * multiplyer, end="  ")
-            elif width * multiplyer >= 1000:
-                print(width * multiplyer, end=" ")
-            else:
-                print(width * multiplyer, end="     ")
+                print(width * multiplyer, end="\t")
         print()
         multiplyer += 1
 else:
