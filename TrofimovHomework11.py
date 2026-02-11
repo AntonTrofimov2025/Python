@@ -36,7 +36,7 @@ for i in range(0, len(text)):
 # Task III
 
 text = "I have 5 apples and 10 oranges, price is 0.5 each. Card number is ....3672.".split()
-res = ""
+res = []
 
 # for i in text:
 #     if i.isdigit() or i == "0.5":
@@ -47,8 +47,10 @@ res = ""
 
 for i in text:
     if i.isdigit() or i.replace(".", "", 1).isdigit():
-        res = res + str(float(i) * 10) + " "
+        res.append(str(float(i) * 10))
     else:
-        res = res + i + " "
+        res.append(i)
 
-print(res)
+res2 = " ".join(res)
+
+print(res2)
