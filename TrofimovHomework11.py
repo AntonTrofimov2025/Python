@@ -2,10 +2,19 @@
 
 text = "My number is 123-456-789"
 res = ""
+# "Var I"
+#
+# for i in text:
+#     if i.isdigit():
+#         res = res + "*"
+#     else:
+#         res = res + i
+"Var II"
 
 for i in text:
     if i.isdigit():
-        res = res + "*"
+        i = i.replace(i, "*")
+        res = res + i
     else:
         res = res + i
 
