@@ -1,6 +1,5 @@
 print("Число Армстронга")
 number = int(input("Введите число: "))
-q = 10
 buffer = 0
 buffer2 = ""
 
@@ -10,8 +9,8 @@ for i in range(1, number + 1):
     i = int(i)
     comp = i
     while i != 0:
-        res = i % q
-        i = i // q
+        res = i % 10
+        i = i // 10
         buffer = buffer + res ** length
     if buffer == comp:
         buffer = str(buffer)
