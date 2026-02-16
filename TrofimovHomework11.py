@@ -1,24 +1,16 @@
-# Task I
-
-text = "My number is 123-456-789"
-res = ""
-# "Var I"
+# # Task I
+#
+# text = "My number is 123-456-789"
+# res = ""
 #
 # for i in text:
 #     if i.isdigit():
 #         res = res + "*"
 #     else:
 #         res = res + i
-"Var II"
-
-for i in text:
-    if i.isdigit():
-        i = i.replace(i, "*")
-        res = res + i
-    else:
-        res = res + i
-
-print(res)
+#
+#
+# print(res)
 
 # Task II
 
@@ -30,27 +22,25 @@ for i in range(0, len(text)):
         times = text.count(text[i])
         print(f"Символ '{text[i]}' встречается {times} раз(а)")
         buffer = buffer + text[i]
-    else:
-        continue
 
-# Task III
-
-text = "I have 5 apples and 10 oranges, price is 0.5 each. Card number is ....3672.".split()
-res = []
-
+# # Task III
+#
+# text = "I have 5 apples and 10 oranges, price is 0.5 each. Card number is ....3672.".split()
+# res = []
+#
+# # for i in text:
+# #     if i.isdigit() or i == "0.5":
+# #         b = str(float(i) * 10)
+# #         res = res + b + " "
+# #     else:
+# #         res = res + i + " "
+#
 # for i in text:
-#     if i.isdigit() or i == "0.5":
-#         b = str(float(i) * 10)
-#         res = res + b + " "
+#     if i.isdigit() or i.replace(".", "", 1).isdigit():
+#         res.append(str(float(i) * 10))
 #     else:
-#         res = res + i + " "
-
-for i in text:
-    if i.isdigit() or i.replace(".", "", 1).isdigit():
-        res.append(str(float(i) * 10))
-    else:
-        res.append(i)
-
-res2 = " ".join(res)
-
-print(res2)
+#         res.append(i)
+#
+# res2 = " ".join(res)
+#
+# print(res2)
