@@ -5,8 +5,6 @@ res = 0
 for item in range(0, len(numbers)):
     if numbers[item] > 0:
         res = res + numbers[item]
-    else:
-        continue
 
 print(f"Сумма положительных чисел: ${res:,.2f}")
 
