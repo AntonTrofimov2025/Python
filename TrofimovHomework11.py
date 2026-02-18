@@ -1,15 +1,11 @@
 # Task I
 
 text = "My number is 123-456-789"
-res = ""
 
-for i in text:
-    if i.isdigit():
-        res = res + "*"
-    else:
-        res = res + i
+for i in "0123456789":
+        text = text.replace(i, "*")
 
-print(res)
+print(text)
 
 # Task II
 
