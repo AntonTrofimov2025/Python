@@ -36,10 +36,21 @@ print(f"Кортеж по возрастанию: {res}")
 numbers = (1, 2, 3, 4, 2, 5, 3, 6, 4, 2, 9)
 buffer = []
 
+"Var IV"
+for item in numbers:
+    if numbers.count(item) > 1 and item not in buffer:
+        target = item
+        index_buffer = []
+        for index, char in enumerate(numbers):
+            if char == target:
+                index_buffer.append(str(index))
+        print(f"Индексы элемента {item}: {" ".join(index_buffer)}")
+        buffer.append(item)
+
 "Var III"
 for item in numbers:
     if numbers.count(item) > 1 and item not in buffer:
-        start = 0
+        start = -1
         index_buffer = []
         for _ in range(numbers.count(item)):
             index = numbers.index(item, start + 1)
