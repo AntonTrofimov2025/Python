@@ -44,7 +44,7 @@ print(f"Строки с цифрами только в конце: {new_list}")
 #
 # print(f"Строки с цифрами только в конце: {new_list}")
 
-"Just one another variation :)"
+"Just one another variation :), Var 0"
 # buf = []
 # res = []
 # for item in strings:
@@ -85,24 +85,40 @@ print(f"Список без кратных значений: {new_list}")
 ● чётные числа отсортированы между собой обратном порядке."""
 
 numbers = [5, 2, 3, 8, 4, 1, 2, 7]
-even = []
-odd = []
-index = []
-start = 0
-x = 0
 
-for item in numbers:
-    if item % 2:
-        odd.append(item)
+"Var II"
+odd = sorted([odd_digit for odd_digit in numbers if odd_digit % 2 == 0], reverse=True)
+res = []
+index = 0
+
+for digit in numbers:
+    if digit % 2:
+        res.append(digit)
     else:
-        even.append(item)
-        index.append(numbers.index(item, start))
-    start += 1
+        res.append(odd[index])
+        index += 1
 
-even.sort(reverse=True)
+print(f"Список после сортировки: {res}")
 
-for item in even:
-    odd.insert(index[x], item)
-    x += 1
-
-print(f"Список после сортировки: {odd}")
+"Var I"
+# even = []
+# odd = []
+# index = []
+# start = 0
+# x = 0
+#
+# for item in numbers:
+#     if item % 2:
+#         odd.append(item)
+#     else:
+#         even.append(item)
+#         index.append(numbers.index(item, start))
+#     start += 1
+#
+# even.sort(reverse=True)
+#
+# for item in even:
+#     odd.insert(index[x], item)
+#     x += 1
+#
+# print(f"Список после сортировки: {odd}")
