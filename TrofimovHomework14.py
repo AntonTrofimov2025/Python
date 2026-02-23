@@ -6,26 +6,43 @@
 исходного списка, в которых цифры находятся только в конце."""
 
 strings = ["apple23", "ban1ana45", "12cherry", "grape3", "blue23berry"]
+"Var II"
 new_list = []
-normal_res = []
-reversed_res = []
-
 for item in strings:
-    for index, char in enumerate(item):
+    found_digit = False
+    success = True
+    for char in item:
         if char.isdigit():
-            normal_res.append(index)
-    for i in range(len(item) - 1, -1, -1):
-        if item[i].isdigit():
-            reversed_res.append(i)
+            found_digit = True
         else:
-            break
-    reversed_res.reverse()
-    if normal_res == reversed_res:
+            if found_digit:
+                success = False
+    if success and found_digit:
         new_list.append(item)
-    normal_res.clear()
-    reversed_res.clear()
 
 print(f"Строки с цифрами только в конце: {new_list}")
+
+# "Var I"
+# new_list = []
+# normal_res = []
+# reversed_res = []
+#
+# for item in strings:
+#     for index, char in enumerate(item):
+#         if char.isdigit():
+#             normal_res.append(index)
+#     for i in range(len(item) - 1, -1, -1):
+#         if item[i].isdigit():
+#             reversed_res.append(i)
+#         else:
+#             break
+#     reversed_res.reverse()
+#     if normal_res == reversed_res:
+#         new_list.append(item)
+#     normal_res.clear()
+#     reversed_res.clear()
+#
+# print(f"Строки с цифрами только в конце: {new_list}")
 
 "Just one another variation :)"
 # buf = []
