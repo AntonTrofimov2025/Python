@@ -7,24 +7,38 @@
 
 strings = ["apple23", "ban1ana45", "12cherry", "grape3", "blue23berry"]
 new_list = []
-index = []
-index2 = []
+normal_res = []
+reversed_res = []
 
 for item in strings:
-    for i in item:
-        if i.isdigit():
-            index.append(item.index(i))
-    for i2 in item[::-1]:
-        if i2.isdigit():
-            index2.append(item.index(i2))
+    for index, char in enumerate(item):
+        if char.isdigit():
+            normal_res.append(index)
+    for i in range(len(item) - 1, -1, -1):
+        if item[i].isdigit():
+            reversed_res.append(i)
         else:
             break
-    if index2[::-1] == index:
+    reversed_res.reverse()
+    if normal_res == reversed_res:
         new_list.append(item)
-    index.clear()
-    index2.clear()
+    normal_res.clear()
+    reversed_res.clear()
 
 print(f"Строки с цифрами только в конце: {new_list}")
+
+"Just one another variation :)"
+# buf = []
+# res = []
+# for item in strings:
+#     for index, char in enumerate(item):
+#         if char.isdigit():
+#             buf.append(char)
+#     if buf == list(item.lstrip("""ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz -!№{/;%:?*()_+:":?><|}.,'[]""")):
+#         res.append(item)
+#     buf.clear()
+#
+# print(f"Строки с цифрами только в конце: {res}")
 
 # Task II
 
