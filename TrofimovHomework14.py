@@ -17,6 +17,7 @@ for item in strings:
         else:
             if found_digit:
                 success = False
+                break
     if success and found_digit:
         new_list.append(item)
 
