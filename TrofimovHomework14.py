@@ -14,14 +14,45 @@ for item in strings:
     for char in item:
         if char.isdigit():
             found_digit = True
-        else:
-            if found_digit:
-                success = False
-                break
+        elif found_digit:
+            success = False
+            break
     if success and found_digit:
         new_list.append(item)
 
 print(f"Строки с цифрами только в конце: {new_list}")
+
+"Bonus: Numbers only at the beginning"
+new_list = []
+
+for item in strings:
+    if item and not item[0].isdigit():
+        continue
+    found_alpha = False
+    is_success = True
+    for char in item:
+        if not char.isdigit():
+            found_alpha = True
+        elif found_alpha:
+            is_success = False
+            break
+    if is_success and found_alpha:
+        new_list.append(item)
+
+print(f"Строки с цифрами только в начале строки: {new_list}")
+
+"Variation with lstrip"
+new_list = []
+
+for item in strings:
+    if item and item[0].isdigit():
+        remove_left = item.lstrip("0123456789")
+        for char in remove_left:
+            if char.isdigit():
+                break
+        new_list.append(item)
+
+print(f"Строки с цифрами только в начале строки: {new_list}")
 
 # "Var I"
 # new_list = []

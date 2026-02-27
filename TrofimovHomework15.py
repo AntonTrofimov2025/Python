@@ -21,7 +21,7 @@ text_list = ["Hello", "Python Programming", "World", "Advanced Topics", "Simple"
 #     x += 1
 
 "Var I"
-for item in text_list[:]:
+for item in reversed(text_list):
     if len(item.split()) > 1:
         text_list.remove(item)
     else:
@@ -52,7 +52,6 @@ for item in products:
 
 
 
-
 "BONUS, side task from lesson"
 """Фильтрация элементов в группах
 
@@ -65,11 +64,19 @@ nested_list = [[10, 15, 20], [5, 25, 30], [35, 40, 80]]
 deep_copy = copy.deepcopy(nested_list)
 elements = []
 
+"More effective version"
 for item in deep_copy:
     avg_value = sum(item) / len(item)
-    for element in item[:]:
-        if element < avg_value:
-            item.remove(element)
+    for i in range(len(item) -1, -1, -1):
+        if item[i] < avg_value:
+            item.pop(i)
+
+# "Old version"
+# for item in deep_copy:
+#     avg_value = sum(item) / len(item)
+#     for element in reversed(item):
+#         if element < avg_value:
+#             item.remove(element)
 
 # indexes = []
 #
@@ -87,7 +94,6 @@ for item in deep_copy:
 #         ind += 1
 #         count -= 1
 #     indexes.clear()
-
 
 print(f"Исходный список: {nested_list}")
 print(f"Глубокая копия после изменений: {deep_copy}")
