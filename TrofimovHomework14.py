@@ -119,7 +119,7 @@ print(f"Список без кратных значений: {new_list}")
 numbers = [5, 2, 3, 8, 4, 1, 2, 7]
 
 "Var II"
-even = sorted([odd_digit for odd_digit in numbers if odd_digit % 2 == 0], reverse=True)
+even = sorted([even_digit for even_digit in numbers if even_digit % 2 == 0], reverse=True)
 res = []
 index = 0
 
