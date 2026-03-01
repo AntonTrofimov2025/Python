@@ -44,9 +44,19 @@ discount = (100 - percent) / 100
 
 print(f"{"Товар":<10} {"Старая цена":>15} {"Новая цена":>20}")
 
+"New"
 for item in products:
-    product, price = item
-    print(f"{product:<10} {price:>14.2f}$ {price*discount:>19.2f}$")
+    new_price = item[1] * discount
+    item.append(new_price)
+    product, price, new_price = item
+    print(f"{product:<10} {price:>14.2f}$ {new_price:>19.2f}$")
+
+"Old"
+# for index, item in enumerate(products):
+#     new_price = products[index][1] * discount
+#     products[index].append(new_price)
+#     product, price, new_price = item
+#     print(f"{product:<10} {price:>14.2f}$ {new_price:>19.2f}$")
 
 
 
