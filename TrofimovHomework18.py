@@ -9,13 +9,13 @@ numbers = [4, 7, 3, 7, 8, 3, 4, 2, 7, 3, 8, 4]
 numbers = [4, 7, 3, 7, 8, 3, 4, 2, 7, 3, 8, 4]
 # new = set(numbers)
 #
-# for digit in list(new):
+# for digit in new:
 #     if numbers.count(digit) < 2:
 #         new.discard(digit)
 #
 # print(sorted(new, reverse=True))
 
-print(sorted({digit for digit in numbers if numbers.count(digit) > 1}, reverse=True))
+print(sorted({digit for digit in set(numbers) if numbers.count(digit) > 1}, reverse=True))
 
 """2. Проверка подмножества
 Напишите программу, которая проверяет, является ли
