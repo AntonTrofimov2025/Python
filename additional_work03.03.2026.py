@@ -313,7 +313,7 @@ counts = {}
 
 for index, event in enumerate(events):
     if event in counts:
-        counts[event] += [index]
+        counts[event].append(index)
     else:
         counts[event] = [index]
 
