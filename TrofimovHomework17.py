@@ -27,20 +27,23 @@ print(f"Элементы в обоих списках: {set(list1) & set(list2)}
 set1 = {1, 2, 3, 4}
 set2 = {2, 3}
 
-"With set options"
-if set1 >= set2:
-    success = True
-else:
-    success = False
+print("Пример вывода:", set1 >= set2)
 
-print("Пример вывода:")
-print(success)
+# "With set options"
+# if set1 >= set2:
+#     success = True
+# else:
+#     success = False
+#
+# print("Пример вывода:")
+# print(success)
 
 "Without set options"
 success = True
 for i in set2:
     if i not in set1:
         success = False
+        break
 
 # success = None
 # for i in set2:
@@ -74,8 +77,8 @@ if s1s2:
     print(f"Разница: {set2 - set1}")
 
 "Var I"
-print(f"Является ли set2 подмножеством set1?: {s2s1}\n{"Разница: " if s2s1 == True else ""}"
-      f"{set1 - set2 if s2s1 == True else ""}")
+print(f"Является ли set2 подмножеством set1?: {s2s1}\n{"Разница: " if s2s1 else ""}"
+      f"{set1 - set2 if s2s1 else ""}")
 
-print(f"Является ли set1 подмножеством set2?: {s1s2}\n{"Разница: " if s1s2 == True else ""}"
-      f"{set2 - set1 if s1s2 == True else ""}")
+print(f"Является ли set1 подмножеством set2?: {s1s2}\n{"Разница: " if s1s2 else ""}"
+      f"{set2 - set1 if s1s2 else ""}")
