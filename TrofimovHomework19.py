@@ -1,68 +1,68 @@
-# # """Напишите программу, которая меняет местами ключи и значения в словаре.
-# # Если значения повторяются, добавьте их в список.
-# #
-# # Пример вывода:
-# # Перевернутый словарь: {1: ['a', 'c'], 2: ['b'], 3: ['d']}"""
-# #
-# # data = {"a": 1, "b": 2, "c": 1, "d": 3}
-# #
-# # "Final"
-# # out = {}
-# #
-# # for key, value in data.items():
-# #     out.setdefault(value, []).append(key)
-# #
-# # print(out)
-# #
-# # "Var II"
-# # # res = {value: [key] for key, value in data.items()} # Не подойдет :\
-# # #
-# # # print(res)
-# #
-# # "First var"
-# # # out = {}
-# # #
-# # # for key, value in data.items():
-# # #     if value not in out:
-# # #         out[value] = [key]
-# # #     else:
-# # #         out[value].append(key)
-# # #
-# # # print(out)
+"""Напишите программу, которая меняет местами ключи и значения в словаре.
+Если значения повторяются, добавьте их в список.
+
+Пример вывода:
+Перевернутый словарь: {1: ['a', 'c'], 2: ['b'], 3: ['d']}"""
+
+data = {"a": 1, "b": 2, "c": 1, "d": 3}
+
+"Final"
+out = {}
+
+for key, value in data.items():
+    out.setdefault(value, []).append(key)
+
+print(out)
+
+"Var II"
+# res = {value: [key] for key, value in data.items()} # Не подойдет :\
 #
-# """Счётчик букв в словах
-# Напишите программу, которая подсчитывает количество каждой буквы в заданных словах и создаёт словарь,
-# где ключи — это слова, а значения — это ещё один словарь с подсчётом каждой буквы.
+# print(res)
+
+"First var"
+# out = {}
 #
-# Пример вывода:
-# {'anna': {'a': 2, 'n': 2}, 'bennet': {'b': 1, 'e': 2, 'n': 2, 't': 1}, 'john': {'j': 1,
-# 'o': 1, 'h': 1, 'n': 1}}"""
+# for key, value in data.items():
+#     if value not in out:
+#         out[value] = [key]
+#     else:
+#         out[value].append(key)
 #
-# words = ["anna", "bennet", "john"]
-#
-# "Second var"
+# print(out)
+
+"""Счётчик букв в словах
+Напишите программу, которая подсчитывает количество каждой буквы в заданных словах и создаёт словарь,
+где ключи — это слова, а значения — это ещё один словарь с подсчётом каждой буквы.
+
+Пример вывода:
+{'anna': {'a': 2, 'n': 2}, 'bennet': {'b': 1, 'e': 2, 'n': 2, 't': 1}, 'john': {'j': 1,
+'o': 1, 'h': 1, 'n': 1}}"""
+
+words = ["anna", "bennet", "john"]
+
+"Second var"
+res = {}
+for word in words:
+    value = {}
+    for letter in word:
+        value[letter] = value.get(letter, 0) + 1
+    res[word] = value
+
+print(res)
+
+"First var"
 # res = {}
 # for word in words:
 #     value = {}
-#     for letter in word:
-#         value[letter] = value.get(letter, 0) + 1
-#     res[word] = value
+#     for letter in set(word):
+#         how_many = word.count(letter)
+#         value.setdefault(letter, how_many)
+#     res.setdefault(word, value)
 #
 # print(res)
-#
-# "First var"
-# # res = {}
-# # for word in words:
-# #     value = {}
-# #     for letter in set(word):
-# #         how_many = word.count(letter)
-# #         value.setdefault(letter, how_many)
-# #     res.setdefault(word, value)
-# #
-# # print(res)
-#
-# "Just text :)"
-# print({word: {letter: word.count(letter) for letter in set(word)} for word in words})
+
+"Just text :)"
+print({word: {letter: word.count(letter) for letter in set(word)} for word in words})
 
 """Распределение студентов по группам
 У вас есть словарь, где ключи — имена студентов,
