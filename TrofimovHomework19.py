@@ -45,7 +45,13 @@ res = {}
 for word in words:
     value = {}
     for letter in word:
+        "Advanced version"
         value[letter] = value.get(letter, 0) + 1
+        "Just as example of more simple variation"
+    #     if letter in value:
+    #         value[letter] += 1
+    #     else:
+    #         value[letter] = 1
     res[word] = value
 
 print(res)
