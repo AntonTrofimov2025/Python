@@ -17,12 +17,14 @@ scale = "C"
 def degree_convertor(temp, scale="C"):
     if scale == "C":
         return print(f"{temp}{scale} = {temp * 9/5 + 32}F")
-    return print(f"{temp}{scale} = {(temp - 32) * 5/9}C")
+    if scale == "F":
+        return print(f"{temp}{scale} = {(temp - 32) * 5/9}C")
 
 degree_convertor(100)
 degree_convertor(100, "C")
 degree_convertor(100, scale="C")
 degree_convertor(212, "F")
+degree_convertor(444, "DD") # Ничего не выведет, т.к. шкала - некорректная
 
 """Создайте функцию filter_strings, которая принимает
 целое число n и любое количество строк (по
