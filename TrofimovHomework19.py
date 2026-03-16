@@ -96,12 +96,21 @@ groups = [("Отличники", 85), ("Хорошисты", 70),
 ("Троечники", 50), ("Не сдали", 0)]
 
 res = {}
-
 for student, grade in students.items():
     for group in groups:
         group_name, threshold = group
         if grade >= threshold:
             res.setdefault(group_name, {})[student] = grade
             break
+
+"More effective version with defaultdict"
+# from collections import defaultdict
+# res = defaultdict(dict)
+# for student, grade in students.items():
+#     for group in groups:
+#         group_name, threshold = group
+#         if grade >= threshold:
+#             res[group_name][student] = grade
+#             break
 
 print(res)
