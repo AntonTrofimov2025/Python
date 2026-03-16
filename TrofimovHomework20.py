@@ -91,12 +91,10 @@ n = 17
 def is_number_simple(n):
     if n == 1:
         return False
-    res = True
-    for div in range(n - 1, 1, -1):
+    for div in range(n - 1, 1, -1): # Да, я понимаю что можно использовать range(2, n), но мне захотелось сделать так, пойти в обратную сторону :)
         if not n % div:
-            res = False
-            break
-    return res
+            return False
+    return True
 
 print(f"Число является простым? {is_number_simple(17)}")
 
@@ -148,8 +146,7 @@ dict3 = {"d": 5}
 def merge_dicts(*args):
     res = {}
     for dictionary in args:
-        for key, value in dictionary.items():
-            res[key] = value
+        res.update(dictionary)
     return res
 
 print(merge_dicts(dict1, dict2, dict3))

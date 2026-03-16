@@ -92,24 +92,16 @@ students = {"Аня": 92, "Боря": 76,
 "Ваня": 65, "Галя": 48, "Дима": 88,
 "Ева": 54}
 
-groups = ["Отличники", "Хорошисты",
-"Троечники", "Не сдали"]
+groups = [("Отличники", 85), ("Хорошисты", 70),
+("Троечники", 50), ("Не сдали", 0)]
 
 res = {}
-res["Отличники"] = {}
-res["Хорошисты"] = {}
-res["Троечники"] = {}
-res["Не сдали"] = {}
 
 for student, grade in students.items():
-    if grade >= 85:
-        res["Отличники"][student] = grade
-    elif grade >= 70:
-        res["Хорошисты"][student] = grade
-    elif grade >= 50:
-        res["Троечники"][student] = grade
-    else:
-        res["Не сдали"][student] = grade
+    for group in groups:
+        group_name, threshold = group
+        if grade >= threshold:
+            res.setdefault(group_name, {})[student] = grade
+            break
 
 print(res)
-
