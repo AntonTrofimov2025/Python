@@ -91,7 +91,7 @@ n = 17
 def is_number_simple(n):
     if n == 1:
         return False
-    for div in range(n - 1, 1, -1): # Да, я понимаю что можно использовать range(2, n), но мне захотелось сделать так, пойти в обратную сторону :)
+    for div in range(n - 1, 1, -1): # Да, я понимаю что можно использовать range(2, n), но мне захотелось пойти в обратную сторону :)
         if not n % div:
             return False
     return True
