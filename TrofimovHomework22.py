@@ -62,11 +62,8 @@ orders = [
     {"product": "Desk", "price": 400}
 ]
 
-":)"
-# x = map(lambda x: x["product"] if x["price"] > 500 else "", orders)
-# x = filter(None, x)
-# x = sorted(x)
-# print(list(x))
+x = sorted((map(lambda x: x["product"], filter(lambda x: x["price"] > 500, orders))))
+print(x)
 
 def sorting_orders(worterbuch_bitte):
     # res = []
@@ -74,8 +71,17 @@ def sorting_orders(worterbuch_bitte):
     #     if item["price"] > 500:
     #         res.append(item["product"])
     # return sorted(res)
-    return sorted([item["product"] for item in worterbuch_bitte if item["price"] > 500])
+    # return sorted([item["product"] for item in worterbuch_bitte if item["price"] > 500])
+    return sorted(map(lambda x: x["product"], filter(lambda x: x["price"] > 500, worterbuch_bitte)))
+
 print(sorting_orders(orders))
+
+# OLD, NOT ACTUAL
+# ":)"
+# x = map(lambda x: x["product"] if x["price"] > 500 else "", orders)
+# x = filter(None, x)
+# x = sorted(x)
+# print(x)
 
 # Task II
 "Статистика продаж"
