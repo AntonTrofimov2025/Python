@@ -62,7 +62,7 @@ orders = [
     {"product": "Desk", "price": 400}
 ]
 
-x = sorted((map(lambda x: x["product"], filter(lambda x: x["price"] > 500, orders))))
+x = sorted(map(lambda x: x["product"], filter(lambda x: x["price"] > 500, orders)))
 print(x)
 
 def sorting_orders(worterbuch_bitte):
@@ -71,7 +71,7 @@ def sorting_orders(worterbuch_bitte):
     #     if item["price"] > 500:
     #         res.append(item["product"])
     # return sorted(res)
-    # return sorted([item["product"] for item in worterbuch_bitte if item["price"] > 500])
+    # return sorted([item["product"] for item in worterbuch_bitte if item["price"] > 500]) # This is the best, but modified into lambda-var. Line75
     return sorted(map(lambda x: x["product"], filter(lambda x: x["price"] > 500, worterbuch_bitte)))
 
 print(sorting_orders(orders))
