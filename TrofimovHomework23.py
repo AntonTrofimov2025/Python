@@ -77,13 +77,13 @@ data = [
  {"name": "Charlie", "scores": [7, 17, 27]}
 ]
 
-def score_calculator(lst: list[dict]) -> str:
+def score_calculator(lst: list[dict]) -> int:
     """
     This score calculator receives list of students with their own score and brings them into one total score.
 
     :param lst: List of students with scores presented in the form of a dictionary.
     :return: Returns total score put together from all scores of all students.
     """
-    return f'Итоговый балл: {sum([sum(element["scores"]) for element in lst])}'
+    return sum([sum(element["scores"]) for element in lst])
 
 print(score_calculator(data))
