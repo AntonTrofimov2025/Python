@@ -69,20 +69,35 @@ nested_numbers = [1, [2, 3], [4, [5, 6]], 7]
 Пример вывода:
 28"""
 
-"Var I"
+"Var 0"
 from typing import Any
 nested_numbers = [1, [2, 3], [4, [5, 6]], 7]
 
-def sum_of_int_lists(lst: list[Any]) -> int:
-    res = 0
-    for item in lst:
-        if isinstance(item, int):
-            res += item
-        else:
-            res += sum_of_int_lists(item)
-    return res
+def sum_of_int_lists(obj: list[Any]) -> int:
+    if not obj:
+        return 0
+    if isinstance(obj[0], list):
+        sum = sum_of_int_lists(obj[0])
+    else:
+        sum = obj[0]
+    return sum + sum_of_int_lists(obj[1:])
 
 print(sum_of_int_lists(nested_numbers))
+
+"Var I"
+# from typing import Any
+# nested_numbers = [1, [2, 3], [4, [5, 6]], 7]
+#
+# def sum_of_int_lists(lst: list[Any]) -> int:
+#     res = 0
+#     for item in lst:
+#         if isinstance(item, int):
+#             res += item
+#         else:
+#             res += sum_of_int_lists(item)
+#     return res
+#
+# print(sum_of_int_lists(nested_numbers))
 
 "Var II"
 # from typing import Any
