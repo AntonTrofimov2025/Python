@@ -41,7 +41,8 @@ def age_checker(your_age: int) -> str:
     return f"Всё ок :). Ваш возраст: {your_age}"
 
 try:
-    print(age_checker(17))
+    enter_your_age = int(input("Введите возраст: "))
+    print(age_checker(enter_your_age))
 except ValueError as e:
     print(e)
 
@@ -55,17 +56,38 @@ except ValueError as e:
 Введите делитель: 5a
 Ошибка: Введено некорректное число"""
 
+"Old"
+# def two_numbers_divider():
+#     try:
+#         a = float(input("Введите делимое: "))
+#         b = float(input("Введите делитель: "))
+#         res = a / b
+#     except (ValueError, ZeroDivisionError):
+#         print("Ошибка: Введено некорректное число")
+#     else:
+#         print(f"Результат деления: {res}")
+#
+# two_numbers_divider()
+
+"New, Improved, I hope"
 def two_numbers_divider():
     try:
         a = float(input("Введите делимое: "))
         b = float(input("Введите делитель: "))
         res = a / b
-    except (ValueError, ZeroDivisionError):
-        print("Ошибка: Введено некорректное число")
+    except ValueError:
+        raise ValueError("Ошибка: Введено некорректное число")
+    except ZeroDivisionError:
+        raise ZeroDivisionError("Ошибка: Нельзя делить на ноль")
     else:
-        print(f"Результат деления: {res}")
+        return f"Результат деления: {res}"
+    finally:
+        print("Программа завершена.")
 
-two_numbers_divider()
+try:
+    print(two_numbers_divider())
+except (ValueError, ZeroDivisionError) as e:
+    print(e)
 
 # Task II
 "Логирование ошибок"
@@ -74,21 +96,49 @@ two_numbers_divider()
 Пример вывода:
 2025-02-23 22:38:53,686 - ERROR - test.py - 16 - Ошибка: Введено некорректное число."""
 
+"Old"
+# import logging
+# logging.basicConfig(filename="task2_trofimov.log",
+#                     format="%(asctime)s - %(levelname)s - %(filename)s - %(lineno)d - %(message)s",
+#                     encoding="utf-8"
+#                     )
+#
+# def two_numbers_divider():
+#     try:
+#         a = float(input("Введите делимое: "))
+#         b = float(input("Введите делитель: "))
+#         res = a / b
+#     except (ValueError, ZeroDivisionError):
+#         logging.error("Ошибка: Введено некорректное число")
+#         print("Ошибка: Введено некорректное число")
+#     else:
+#         print(f"Результат деления: {res}")
+#
+# two_numbers_divider()
+
+"New, Improved, I hope"
 import logging
 logging.basicConfig(filename="task2_trofimov.log",
                     format="%(asctime)s - %(levelname)s - %(filename)s - %(lineno)d - %(message)s",
-                    encoding="utf-8"
-                    )
+                    encoding="utf-8")
 
 def two_numbers_divider():
     try:
         a = float(input("Введите делимое: "))
         b = float(input("Введите делитель: "))
         res = a / b
-    except (ValueError, ZeroDivisionError):
+    except ValueError:
         logging.error("Ошибка: Введено некорректное число")
-        print("Ошибка: Введено некорректное число")
+        raise ValueError("Ошибка: Введено некорректное число")
+    except ZeroDivisionError:
+        logging.error("Ошибка: Нельзя делить на ноль")
+        raise ZeroDivisionError("Ошибка: Нельзя делить на ноль")
     else:
-        print(f"Результат деления: {res}")
+        return f"Результат деления: {res}"
+    finally:
+        print("Программа завершена.")
 
-two_numbers_divider()
+try:
+    print(two_numbers_divider())
+except (ValueError, ZeroDivisionError) as e:
+    print(e)
