@@ -78,8 +78,8 @@ def two_numbers_divider(a: str, b: str) -> float:
         print("Программа завершена.")
 
 try:
-    a = float(input("Введите делимое: "))
-    b = float(input("Введите делитель: "))
+    a = input("Введите делимое: ")
+    b = input("Введите делитель: ")
     print(f"Результат деления: {two_numbers_divider(a, b)}")
 except (ValueError, ZeroDivisionError) as e:
     print(e)
