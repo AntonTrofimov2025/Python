@@ -74,8 +74,6 @@ def two_numbers_divider(a: str, b: str) -> float:
         raise ZeroDivisionError("Ошибка: Нельзя делить на ноль")
     else:
         return res
-    finally:
-        print("Программа завершена.")
 
 try:
     a = input("Введите делимое: ")
@@ -116,8 +114,6 @@ def two_numbers_divider(a: str, b: str) -> float:
         raise ZeroDivisionError("Ошибка: Нельзя делить на ноль")
     else:
         return res
-    finally:
-        print("Программа завершена.")
 
 try:
     a = input("Введите делимое: ")
