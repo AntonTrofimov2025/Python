@@ -18,7 +18,7 @@ filter_low_scores(70, "01-01-2025", "31-03-2025")
 ]
 """
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 data = [
   {"name": "Bob", "subject": "Science", "grade": 86, "date": "06-09-2025"},
@@ -109,8 +109,8 @@ def filter_low_scores(threshold, start_date, end_date):
                 line_datetime = datetime.strptime(line["date"], "%d-%m-%Y")
                 if line["grade"] < threshold and start_date <= line_datetime <= end_date:
                     basket.append(line)
-            with open("filtered_low_scores.json", "w", encoding="utf-8") as f2:
-                json.dump(basket, f2, indent=4)
+        with open("filtered_low_scores.json", "w", encoding="utf-8") as f2:
+            json.dump(basket, f2, indent=4)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(e)
     return basket
@@ -139,6 +139,7 @@ try:
         json_into_dict = json.load(stud_file)
         stud_counter = 0
         age_sum = 0
+        avg_age = 0
         subjects = dict()
         for obj in json_into_dict:
             for subj in obj["courses"]:
@@ -150,15 +151,16 @@ try:
             age_sum += age_to_enrollment
             stud_counter += 1
         res = {}
-        avg_age = age_sum // stud_counter
+        if stud_counter:
+            avg_age = age_sum // stud_counter
         res["Students overall"] = stud_counter
         res["Average age"] = avg_age
         res["Students per subject"] = subjects
-        with open("student_courses_report.json", "w", encoding="utf-8") as result:
-            json.dump(res, result, indent=4)
-        print(f"Students overall: {stud_counter}")
-        print(f"Average age: {avg_age}")
-        print(f"Students per subject: {subjects}")
+    with open("student_courses_report.json", "w", encoding="utf-8") as result:
+        json.dump(res, result, indent=4)
+    print(f"Students overall: {stud_counter}")
+    print(f"Average age: {avg_age}")
+    print(f"Students per subject: {subjects}")
 except FileNotFoundError as e:
     print(e)
 
