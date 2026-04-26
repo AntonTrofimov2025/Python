@@ -70,16 +70,31 @@ for num in gen:
 13
 21
 34"""
+from typing import Iterator
 
-def fibonacci(a, b):
+def fibonacci(a: int, b: int) -> Iterator[int]:
+    """
+    This iterator generates Fibonacci sequence starting from two given numbers.
+
+    :param a: The first starting number of the sequence.
+    :param b: The second starting number of the sequence.
+    :return: Returns a generator object.
+    """
+    if not (isinstance(a, int) and isinstance(b, int)):
+        raise TypeError("Arguments must be numbers only!")
+    if a < 0 or b < 0:
+        raise ValueError("Number cannot be negative.")
     while True:
         yield a
         a, b = b, a + b
 
-gen = fibonacci(0, 1)
+try:
+    gen = fibonacci(0, 1)
 
-for _ in range(10):
-    print(gen.__next__())
+    for _ in range(10):
+        print(gen.__next__())
+except (ValueError, TypeError) as e:
+    print(e)
 
 "2. Генератор уникальных элементов"
 """Создайте генератор, который принимает список элементов и выдаёт только уникальные значения, сохраняя
@@ -97,8 +112,20 @@ data = [3, 1, 2, 3, 4, 1, 5, 2, 6, 7, 5, 8]
 6
 7
 8"""
+from typing import Iterator
 
-def unique_elements(nums):
+def unique_elements(nums: list[int]) -> Iterator[int]:
+    """
+    The list of elements-accepting generator that's used to separate
+    only unique values preserving its original order.
+
+    :param nums: Put here your list of elements.
+    :return: Returns a generator object.
+    """
+    if not isinstance(nums, list):
+        raise TypeError("Argument must be a list!")
+    if not all(isinstance(num, int) for num in nums):
+        raise TypeError("All list elements must be int!")
     check = set()
     for num in nums:
         if num not in check:
@@ -107,7 +134,10 @@ def unique_elements(nums):
 
 data = [3, 1, 2, 3, 4, 1, 5, 2, 6, 7, 5, 8]
 
-gen = unique_elements(data)
+try:
+    gen = unique_elements(data)
 
-for num in gen:
-    print(num)
+    for num in gen:
+        print(num)
+except TypeError as e:
+    print(e)
