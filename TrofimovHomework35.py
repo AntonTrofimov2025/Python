@@ -26,7 +26,9 @@ class City:
         dist = ov_latitude + ov_longitude
         return round(dist, 2)
     @classmethod
-    def from_string(cls, data):
+    def from_string(cls, data: str):
+        if not isinstance(data, str):
+            raise TypeError("Attr must be str!!")
         data = re.split(r"[,:]", data)
         city, latitude, longitude = data
         return cls(city, float(latitude), float(longitude))
@@ -46,6 +48,12 @@ City: Rome (41.89, 12.51)"""
 
 city3 = City.from_string("Rome:41.89,12.51")
 print(city3)
+
+try:
+    city4 = City.from_string(41.891251)
+    print(city4)
+except Exception as e:
+    print(e)
 
 """1. Счётчик экземпляров
 Создайте класс User, представляющий пользователя.
