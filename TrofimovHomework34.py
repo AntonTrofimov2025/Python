@@ -78,7 +78,7 @@ milk.apply_discount(25)
 class Rectangle:
     def __init__(self, width: int | float, height: int | float):
         if not (isinstance(width, int | float) and isinstance(height, int | float)):
-            raise ValueError("Height and Width must be numbers!!")
+            raise TypeError("Height and Width must be numbers!!")
         self.width = width
         self.height = height
     def get_area(self) -> int | float:
