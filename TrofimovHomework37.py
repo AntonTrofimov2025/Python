@@ -97,7 +97,7 @@ class VideoFileMixin:
 class VideoBank(VideoFileMixin):
     def __init__(self):
         self.video_files = []
-    def add_video(self, your_video):
+    def add_video(self, your_video: str):
         self.video_files.append(your_video)
 
 my_vid_bank = VideoBank()
@@ -114,7 +114,7 @@ print()
 class AudioGuide(AudioFileMixin):
     def __init__(self):
         self.audio_tracks = []
-    def add_your_favorite_track(self, your_track):
+    def add_your_favorite_track(self, your_track: str):
         self.audio_tracks.append(your_track)
 
 my_audios = AudioGuide()
@@ -137,21 +137,21 @@ print()
 class MediaPlayer(AudioFileMixin):
     def __init__(self, your_track_list: list[str]):
         self.your_track_list = your_track_list
-        self.audio_tracks = []
-        for track in self.your_track_list:
-            self.audio_tracks.append(track)
+        self.audio_tracks = self.your_track_list
+        # for track in self.your_track_list:
+        #     self.audio_tracks.append(track)
 
 
 class Laptop(AudioFileMixin, VideoFileMixin):
     def __init__(self, your_audio_list: list[str], your_vid_list: list[str]):
         self.your_audio_list = your_audio_list
         self.your_vid_list = your_vid_list
-        self.audio_tracks = []
-        self.video_files = []
-        for audio in self.your_audio_list:
-            self.audio_tracks.append(audio)
-        for video in self.your_vid_list:
-            self.video_files.append(video)
+        self.audio_tracks = self.your_audio_list
+        self.video_files = self.your_vid_list
+        # for audio in self.your_audio_list:
+        #     self.audio_tracks.append(audio)
+        # for video in self.your_vid_list:
+        #     self.video_files.append(video)
 
 my_tracks = ["Britney Spears Toxic", "Bon Jovi It's My Life", "Linkin Park Breaking the Habit"]
 my_vids = ["Video_Cats", "Video_Dogs", "Video_Vacations"]
