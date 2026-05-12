@@ -45,8 +45,6 @@ except PermissionError as e:
 print("Access granted." if my_flash_usb.unlock("55555pswd") else "Access denied.")
 print("Access granted." if my_flash_usb.unlock("ps123wd") else "Access denied.")
 
-print(my_flash_usb.secret_intel)
-
 """2. Данные через свойство
 Доработайте класс SecureUSB:
 ● Переделайте метод read() в свойство data, используя @property.
