@@ -82,7 +82,7 @@ class AudioFileMixin:
             raise AttributeError("Field audio_tracks is missing or not a list!!")
         if not all(isinstance(track, str) for track in self.audio_tracks):
             raise TypeError("All list elements should be str!!")
-        print(f"Воспроизведение аудио для {self.__class__.__name__}:\n{'\n'.join(track for track in self.audio_tracks)
+        return (f"Воспроизведение аудио для {self.__class__.__name__}:\n{'\n'.join(track for track in self.audio_tracks)
         if self.audio_tracks else '- No Audio Found'}")
 
 class VideoFileMixin:
@@ -91,7 +91,7 @@ class VideoFileMixin:
             raise AttributeError("Field video_files is missing or not a list!!")
         if not all(isinstance(video, str) for video in self.video_files):
             raise TypeError("All list elements should be str!!")
-        print(f"Воспроизведение видео для {self.__class__.__name__}:\n{'\n'.join(video for video in self.video_files)
+        return (f"Воспроизведение видео для {self.__class__.__name__}:\n{'\n'.join(video for video in self.video_files)
         if self.video_files else '- No Video Found'}")
 
 class VideoBank(VideoFileMixin):
@@ -106,7 +106,7 @@ my_vid_bank.add_video("Video_Dogs")
 my_vid_bank.add_video("Video_Vacations")
 
 try:
-    my_vid_bank.play_video()
+    print(my_vid_bank.play_video())
 except (TypeError, AttributeError) as e:
     print(e)
 print()
@@ -123,7 +123,7 @@ my_audios.add_your_favorite_track("Bon Jovi It's My Life")
 my_audios.add_your_favorite_track("Linkin Park Breaking the Habit")
 
 try:
-    my_audios.play_audio()
+    print(my_audios.play_audio())
 except (TypeError, AttributeError) as e:
     print(e)
 print()
@@ -159,7 +159,7 @@ my_vids = ["Video_Cats", "Video_Dogs", "Video_Vacations"]
 my_laptop = Laptop(my_tracks, my_vids)
 my_media_player = MediaPlayer(my_tracks)
 
-my_laptop.play_audio()
-my_laptop.play_video()
+print(my_laptop.play_audio())
+print(my_laptop.play_video())
 print()
-my_media_player.play_audio()
+print(my_media_player.play_audio())
