@@ -82,8 +82,7 @@ class AudioFileMixin:
             raise AttributeError("Field audio_tracks is missing or not a list!!")
         if not all(isinstance(track, str) for track in self.audio_tracks):
             raise TypeError("All list elements should be str!!")
-        return (f"Воспроизведение аудио для {self.__class__.__name__}:\n{'\n'.join(track for track in self.audio_tracks)
-        if self.audio_tracks else '- No Audio Found'}")
+        return "\n".join(self.audio_tracks)
 
 class VideoFileMixin:
     def play_video(self):
@@ -91,42 +90,41 @@ class VideoFileMixin:
             raise AttributeError("Field video_files is missing or not a list!!")
         if not all(isinstance(video, str) for video in self.video_files):
             raise TypeError("All list elements should be str!!")
-        return (f"Воспроизведение видео для {self.__class__.__name__}:\n{'\n'.join(video for video in self.video_files)
-        if self.video_files else '- No Video Found'}")
+        return "\n".join(self.video_files)
 
-class VideoBank(VideoFileMixin):
-    def __init__(self):
-        self.video_files = []
-    def add_video(self, your_video: str):
-        self.video_files.append(your_video)
-
-my_vid_bank = VideoBank()
-my_vid_bank.add_video("Video_Cats")
-my_vid_bank.add_video("Video_Dogs")
-my_vid_bank.add_video("Video_Vacations")
-
-try:
-    print(my_vid_bank.play_video())
-except (TypeError, AttributeError) as e:
-    print(e)
-print()
-
-class AudioGuide(AudioFileMixin):
-    def __init__(self):
-        self.audio_tracks = []
-    def add_your_favorite_track(self, your_track: str):
-        self.audio_tracks.append(your_track)
-
-my_audios = AudioGuide()
-my_audios.add_your_favorite_track("Britney Spears Toxic")
-my_audios.add_your_favorite_track("Bon Jovi It's My Life")
-my_audios.add_your_favorite_track("Linkin Park Breaking the Habit")
-
-try:
-    print(my_audios.play_audio())
-except (TypeError, AttributeError) as e:
-    print(e)
-print()
+# class VideoBank(VideoFileMixin):
+#     def __init__(self):
+#         self.video_files = []
+#     def add_video(self, your_video: str):
+#         self.video_files.append(your_video)
+#
+# my_vid_bank = VideoBank()
+# my_vid_bank.add_video("Video_Cats")
+# my_vid_bank.add_video("Video_Dogs")
+# my_vid_bank.add_video("Video_Vacations")
+#
+# try:
+#     print(my_vid_bank.play_video())
+# except (TypeError, AttributeError) as e:
+#     print(e)
+# print()
+#
+# class AudioGuide(AudioFileMixin):
+#     def __init__(self):
+#         self.audio_tracks = []
+#     def add_your_favorite_track(self, your_track: str):
+#         self.audio_tracks.append(your_track)
+#
+# my_audios = AudioGuide()
+# my_audios.add_your_favorite_track("Britney Spears Toxic")
+# my_audios.add_your_favorite_track("Bon Jovi It's My Life")
+# my_audios.add_your_favorite_track("Linkin Park Breaking the Habit")
+#
+# try:
+#     print(my_audios.play_audio())
+# except (TypeError, AttributeError) as e:
+#     print(e)
+# print()
 
 """2. Устройства
 Создайте два класса:
@@ -136,18 +134,15 @@ print()
 
 class MediaPlayer(AudioFileMixin):
     def __init__(self, your_track_list: list[str]):
-        self.your_track_list = your_track_list
-        self.audio_tracks = self.your_track_list
+        self.audio_tracks = your_track_list
         # for track in self.your_track_list:
         #     self.audio_tracks.append(track)
 
 
 class Laptop(AudioFileMixin, VideoFileMixin):
     def __init__(self, your_audio_list: list[str], your_vid_list: list[str]):
-        self.your_audio_list = your_audio_list
-        self.your_vid_list = your_vid_list
-        self.audio_tracks = self.your_audio_list
-        self.video_files = self.your_vid_list
+        self.audio_tracks = your_audio_list
+        self.video_files = your_vid_list
         # for audio in self.your_audio_list:
         #     self.audio_tracks.append(audio)
         # for video in self.your_vid_list:
@@ -159,7 +154,14 @@ my_vids = ["Video_Cats", "Video_Dogs", "Video_Vacations"]
 my_laptop = Laptop(my_tracks, my_vids)
 my_media_player = MediaPlayer(my_tracks)
 
-print(my_laptop.play_audio())
-print(my_laptop.play_video())
+laptop_audio = my_laptop.play_audio()
+laptop_video = my_laptop.play_video()
+media_player_audio = my_media_player.play_audio()
+
+print(f"Воспроизведение аудио для {my_laptop.__class__.__name__}:\n{laptop_audio
+        if laptop_audio else '- No Audio Found'}")
+print(f"Воспроизведение видео для {my_laptop.__class__.__name__}:\n{laptop_video
+        if laptop_video else '- No Video Found'}")
 print()
-print(my_media_player.play_audio())
+print(f"Воспроизведение аудио для {my_media_player.__class__.__name__}:\n{media_player_audio
+        if media_player_audio else '- No Audio Found'}")
