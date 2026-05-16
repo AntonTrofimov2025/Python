@@ -143,5 +143,7 @@ my_account.withdraw(50)
 my_account.withdraw(200)
 my_account.history.append("Secret injection :D")
 # print(my_account.history)
-print(f"Operation history:\n{'\n'.join(operation for operation in my_account.history)
-if my_account.history else '- No operations exist'}")
+my_history = my_account.history
+
+print(f"Operation history:\n{'\n'.join(my_history)
+if my_history else '- No operations exist'}")
