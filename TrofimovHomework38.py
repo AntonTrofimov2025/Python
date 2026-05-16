@@ -56,7 +56,7 @@ Device is locked. Access denied.
 Access granted.
 Data: Secret plans"""
 
-print(my_flash_usb.secret_intel)
+print(f"Data: {my_flash_usb.secret_intel}")
 print()
 
 """1. Банковский счёт
@@ -92,7 +92,6 @@ class BankAccount:
             raise ValueError("Error: Amount must be positive.")
         self.__balance += amount
         self.__history.append(f"Deposit: {amount}")
-        return f"{amount} has been deposited."
     def withdraw(self, amount):
         if amount <= 0:
             raise ValueError("Error: Amount must be positive.")
@@ -100,27 +99,25 @@ class BankAccount:
             raise ValueError("Error: Not enough funds.")
         self.__balance -= amount
         self.__history.append(f"Withdraw: {amount}")
-        return f"{amount} has been withdrawn from your account."
     @property
     def balance(self):
         return self.__balance
     @property
     def history(self):
-        return f"Operation history:\n{'\n'.join(operation for operation in self.__history)
-        if self.__history else '- No operations exist'}"
+        return self.__history[:]
 
 my_account = BankAccount("Anton", 500)
 print(f"Current balance: {my_account.balance}")
 
 try:
-    print(my_account.deposit(0))
+    my_account.deposit(0)
 except ValueError as e:
     print(e)
 
 print(f"Current balance: {my_account.balance}")
 
 try:
-    print(my_account.withdraw(500.1))
+    my_account.withdraw(500.1)
 except ValueError as e:
     print(e)
 
@@ -144,4 +141,7 @@ my_account.deposit(500)
 my_account.deposit(350)
 my_account.withdraw(50)
 my_account.withdraw(200)
-print(my_account.history)
+my_account.history.append("Secret injection :D")
+# print(my_account.history)
+print(f"Operation history:\n{'\n'.join(operation for operation in my_account.history)
+if my_account.history else '- No operations exist'}")
