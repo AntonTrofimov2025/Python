@@ -64,20 +64,37 @@ class Shape(ABC):
         pass
 
 class Circle(Shape):
-    def __init__(self, radius):
+    """
+    Represents a circle. Accepts radius.
+
+    Attributes:
+        radius (int | float): Radius required for further calculation.
+    Methods:
+        area(): Returns the calculated area of this circle.
+    """
+    def __init__(self, radius: int | float):
         if radius <= 0:
             raise InvalidSizeError('Radius must be positive!!')
         self.radius = radius
-    def area(self):
+    def area(self) -> int | float:
         return math.pi * self.radius ** 2
 
 class Rectangle(Shape):
-    def __init__(self, width, height):
+    """
+    Represents a rectangle. Accepts width and height.
+
+    Attributes:
+        width (int | float): Width required for further calculation.
+        height (int | float): Height required for further calculation.
+    Methods:
+        area(): Returns the calculated area of this rectangle.
+    """
+    def __init__(self, width: int | float, height: int | float):
         if width <= 0 or height <= 0:
             raise InvalidSizeError('Both width and height must be positive!!')
         self.width = width
         self.height = height
-    def area(self):
+    def area(self) -> int | float:
         return self.width * self.height
 
 
@@ -100,6 +117,10 @@ except InvalidSizeError as e:
 my_circle = Circle(3)
 my_rectangle = Rectangle(5, 4)
 
-print(my_circle.area())
+print(f"{my_circle.area():.2f}")
 print(my_rectangle.area())
+
+print(my_circle.__doc__)
+print()
+print(my_rectangle.__doc__)
 
