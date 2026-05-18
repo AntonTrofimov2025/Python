@@ -1,10 +1,14 @@
 import pymysql
+import os
+from dotenv import load_dotenv
+
+load_dotenv('.env')
 
 with pymysql.connect(
-    host="ich-db.edu.itcareerhub.de",
-    user="ich1",
-    password="password",
-    database="hr",
+    host=os.environ.get('DB_HOST', 'localhost'),
+    user=os.environ.get('DB_USER', 'user'),
+    password=os.environ.get('DB_PASSWORD', 'password'),
+    database=os.environ.get('DB_DATABASE', 'test'),
 ) as conn:  # автоматически закроет connection
     with conn.cursor() as cursor:  # автоматически закроет cursor
         # cursor.execute('SHOW Tables')
