@@ -49,11 +49,11 @@ with pymysql.connect(
     database = "world"
 ) as conn:
     with conn.cursor() as cursor:
-        your_country = input("Select your country: ").lower().title()
+        your_country = input("Select your country: ").strip().lower()
         cursor.execute("""SELECT c.Name, c.Population
                               FROM country ct
                               JOIN city c ON ct.Code = c.CountryCode
-                              WHERE ct.Name = %s
+                              WHERE LOWER(ct.Name) = %s
                               ORDER BY c.Population DESC""", (your_country, ))
         all_data = cursor.fetchall()
         if all_data:
