@@ -17,19 +17,19 @@ with pymysql.connect(
         while True:
             try:
                 your_department = int(input('Enter department number: '))
+            except ValueError:
+                print("Invalid department number. Please try again.")
+            else:
                 cursor.execute("""SELECT d.department_name FROM hr.departments d
                                   JOIN
                                     (select department_id, dense_rank() over (order by department_id) as dep_rank from hr.departments)
                                     as dr ON d.department_id = dr.department_id
                                   WHERE dr.dep_rank = %s""", (your_department, ))
                 department_exists = cursor.fetchone()
-            except ValueError:
-                print("Invalid department number. Please try again.")
-                continue
-            if department_exists:
-                break
-            else:
-                print("Invalid department number. Please try again.")
+                if department_exists:
+                    break
+                else:
+                    print("Invalid department number. Please try again.")
         # print(f"Your choice: {cursor.fetchone()[0]}")
         cursor.execute("""SELECT ROW_NUMBER() OVER (order by e.salary DESC) AS row_num, e.first_name, e.last_name,
                         j.job_title, e.salary, d.department_name, d.department_id
