@@ -98,6 +98,14 @@ $0"""
 class Money:
     def __init__(self, amount: int | float):
         self.amount = amount
+    @property
+    def amount(self):
+        return self.__amount
+    @amount.setter
+    def amount(self, value):
+        if value < 0:
+            value = 0
+        self.__amount = value
     def __str__(self):
         return f"${self.amount}"
     def __iadd__(self, other):
@@ -109,8 +117,6 @@ class Money:
         if not isinstance(other, Money):
             return NotImplemented
         self.amount -= other.amount
-        if self.amount < 0:
-            self.amount = 0
         return self
     def __add__(self, other):
         if not isinstance(other, Money):
@@ -119,10 +125,7 @@ class Money:
     def __sub__(self, other):
         if not isinstance(other, Money):
             return NotImplemented
-        money = self.amount - other.amount
-        if money < 0:
-            return Money(0)
-        return Money(money)
+        return Money(self.amount - other.amount)
 
 money1 = Money(100)
 money2 = Money(50)
