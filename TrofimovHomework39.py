@@ -73,9 +73,15 @@ class Circle(Shape):
         area(): Returns the calculated area of this circle.
     """
     def __init__(self, radius: int | float):
-        if radius <= 0:
-            raise InvalidSizeError('Radius must be positive!!')
         self.radius = radius
+    @property
+    def radius(self):
+        return self.__radius
+    @radius.setter
+    def radius(self, value):
+        if value <= 0:
+            raise InvalidSizeError('Radius must be positive!!')
+        self.__radius = value
     def area(self) -> int | float:
         return math.pi * self.radius ** 2
 
@@ -90,10 +96,24 @@ class Rectangle(Shape):
         area(): Returns the calculated area of this rectangle.
     """
     def __init__(self, width: int | float, height: int | float):
-        if width <= 0 or height <= 0:
-            raise InvalidSizeError('Both width and height must be positive!!')
         self.width = width
         self.height = height
+    @property
+    def width(self):
+        return self.__width
+    @width.setter
+    def width(self, value):
+        if value <= 0:
+            raise InvalidSizeError('Both width and height must be positive!!')
+        self.__width = value
+    @property
+    def height(self):
+        return self.__height
+    @height.setter
+    def height(self, value):
+        if value <= 0:
+            raise InvalidSizeError('Both width and height must be positive!!')
+        self.__height = value
     def area(self) -> int | float:
         return self.width * self.height
 
@@ -123,4 +143,3 @@ print(my_rectangle.area())
 print(my_circle.__doc__)
 print()
 print(my_rectangle.__doc__)
-
