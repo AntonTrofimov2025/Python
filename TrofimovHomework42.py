@@ -75,7 +75,7 @@ with pymysql.connect(host = os.environ.get("DB_HOST", "localhost"),
                         except ValueError as e:
                             print(e)
             if percent != 1:
-                cursor.execute(f"UPDATE products_anton_t SET price = price * {percent}")
+                cursor.execute("UPDATE products_anton_t SET price = price * %s", (percent,))
                 conn.commit()
                 print('Prices updated.')
         except Exception as e:
