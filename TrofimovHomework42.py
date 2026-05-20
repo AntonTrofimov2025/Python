@@ -56,25 +56,24 @@ with pymysql.connect(host = os.environ.get("DB_HOST", "localhost"),
         cursor.executemany("""INSERT INTO products_anton_t (product_name, price) VALUES (%s, %s)""", products)
 
         try:
-            percent = 1
             mass_price_update = input("Do you wanna update all prices? (y/n): ")
             if mass_price_update.lower().strip() == "y":
-                mod = input("You wanna increase or decrease? (d/i): ")
-                if mod in ("i", "d"):
-                    if mod == "i":
-                        mod = True
-                    else:
-                        mod = False
-                    while True:
-                        try:
-                            percent = int(input("By what percent? "))
-                            if not 1 <= percent <= 100:
-                                raise ValueError("Percentage must be int only and between 1 and 100!!")
+                while True:
+                    mod = input("You wanna increase or decrease? (d/i): ").lower().strip()
+                    if mod in ("i", "d"):
+                        # mod = True if mod == "i" else False
+                        mod = mod == "i"
+                        break
+                    print("Please choose between 'i' and 'd'")
+                while True:
+                    try:
+                        percent = int(input("By what percent? "))
+                        if 1 <= percent <= 100:
                             percent = percent / 100 + 1 if mod else 1 - percent / 100
                             break
-                        except ValueError as e:
-                            print(e)
-            if percent != 1:
+                        print("Percentage must be int only and between 1 and 100!!")
+                    except ValueError:
+                        print("Please enter a valid integer number!")
                 cursor.execute("UPDATE products_anton_t SET price = price * %s", (percent,))
                 conn.commit()
                 print('Prices updated.')
