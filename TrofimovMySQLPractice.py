@@ -1,5 +1,6 @@
-import pymysql
 import os
+
+import pymysql
 from dotenv import load_dotenv
 
 load_dotenv('.env')
@@ -32,8 +33,7 @@ with pymysql.connect(
                 department_exists = cursor.fetchone()
                 if department_exists:
                     break
-                else:
-                    print("Invalid department number. Please try again.")
+                print("Invalid department number. Please try again.")
         # print(f"Your choice: {cursor.fetchone()[0]}")
         cursor.execute("""SELECT ROW_NUMBER() OVER (order by e.salary DESC) AS row_num, e.first_name, e.last_name,
                         j.job_title, e.salary, d.department_name, d.department_id
@@ -51,41 +51,39 @@ with pymysql.connect(
         all_data = cursor.fetchall()
         if all_data:
             print(f"Your choice: {all_data[0][5]}")
-            if all_data[0][1] is None:
-                print(f"No employees found in {all_data[0][5]} department.")
-            else:
-                condition = None
-                salary = None
-                filtering = input("Would you like to filter employees by salary? (y/n): ")
-                if filtering.lower().strip() == "y":
+            print(f"No employees found in {all_data[0][5]} department.") if all_data[0][1] is None else ...
+            filtering = input("Would you like to filter employees by salary? (y/n): ") if all_data[0][1] is not None else ""
+            condition = None
+            salary = None
+            is_filter = filtering.lower().strip() != "y"
+            if not is_filter:
+                while True:
                     condition = input("Enter condition (>, <, =, >=, <=): ")
-                    if condition not in (">", "<", "=", ">=", "<="):
-                        condition = None
+                    if condition in (">", "<", "=", ">=", "<="):
+                        break
+                    print("Use indicated operators only!!")
+                while True:
                     try:
-                        salary = int(input("Enter salary: "))
-                    except Exception:
-                        salary = None
-                if condition or salary:
-                    try:
-                        for employee in all_data:
-                            if condition == ">" and employee[4] > salary:
-                                print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                            elif condition == "<" and employee[4] < salary:
-                                print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                            elif condition == ">=" and employee[4] >= salary:
-                                print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                            elif condition == "<=" and employee[4] <= salary:
-                                print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                            elif condition == "=" and employee[4] == salary:
-                                print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                    except TypeError:
-                        for employee in all_data:
-                            print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                else:
-                    for employee in all_data:
-                        print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-        # else:
-        #     print("Department empty or not found or doesn't exist.")
+                        salary = float(input("Enter salary: "))
+                        break
+                    except ValueError:
+                        print("Please use numbers only.")
+            for employee in all_data:
+                if condition == ">" and employee[4] > salary:
+                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
+                elif condition == "<" and employee[4] < salary:
+                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
+                elif condition == ">=" and employee[4] >= salary:
+                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
+                elif condition == "<=" and employee[4] <= salary:
+                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
+                elif condition == "=" and employee[4] == salary:
+                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
+                elif is_filter:
+                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
+
+        else:
+            print("Department empty or not found or doesn't exist.")
 
 """1. Список сотрудников по убыванию
 зарплаты
