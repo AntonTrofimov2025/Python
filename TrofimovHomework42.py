@@ -40,6 +40,23 @@ from dotenv import load_dotenv
 
 load_dotenv(".env_edit")
 
+def is_increase():
+    while True:
+        mod = input("You wanna increase or decrease? (d/i): ").lower().strip()
+        if mod in ("i", "d"):
+            return mod == "i"
+        print("Please choose between 'i' and 'd'")
+
+def behaviour(is_increase):
+    while True:
+        try:
+            percent = int(input("By what percent? "))
+            if 1 <= percent <= 100:
+                return percent / 100 + 1 if is_increase else 1 - percent / 100
+            print("Percentage must be int only and between 1 and 100!!")
+        except ValueError:
+            print("Please enter a valid integer number!")
+
 with pymysql.connect(host = os.environ.get("DB_HOST", "localhost"),
                      user = os.environ.get("DB_USER", "user"),
                      password = os.environ.get("DB_PASSWORD", "password"),
@@ -58,28 +75,14 @@ with pymysql.connect(host = os.environ.get("DB_HOST", "localhost"),
         try:
             mass_price_update = input("Do you wanna update all prices? (y/n): ")
             if mass_price_update.lower().strip() == "y":
-                while True:
-                    mod = input("You wanna increase or decrease? (d/i): ").lower().strip()
-                    if mod in ("i", "d"):
-                        # mod = True if mod == "i" else False
-                        is_increase = mod == "i"
-                        break
-                    print("Please choose between 'i' and 'd'")
-                while True:
-                    try:
-                        percent = int(input("By what percent? "))
-                        if 1 <= percent <= 100:
-                            behaviour = percent / 100 + 1 if is_increase else 1 - percent / 100
-                            break
-                        print("Percentage must be int only and between 1 and 100!!")
-                    except ValueError:
-                        print("Please enter a valid integer number!")
-                cursor.execute("UPDATE products_anton_t SET price = price * %s", (behaviour,))
+                your_choice = is_increase()
+                what_percent = behaviour(your_choice)
+                cursor.execute("UPDATE products_anton_t SET price = price * %s", (what_percent,))
                 conn.commit()
                 print('Prices updated.')
         except Exception as e:
-            print(f"Something went wrong: {e}")
             conn.rollback()
+            print(f"Something went wrong: {e}")
 
         cursor.execute("SELECT * FROM products_anton_t")
         all_data = cursor.fetchall()
