@@ -62,19 +62,19 @@ with pymysql.connect(host = os.environ.get("DB_HOST", "localhost"),
                     mod = input("You wanna increase or decrease? (d/i): ").lower().strip()
                     if mod in ("i", "d"):
                         # mod = True if mod == "i" else False
-                        mod = mod == "i"
+                        is_increase = mod == "i"
                         break
                     print("Please choose between 'i' and 'd'")
                 while True:
                     try:
                         percent = int(input("By what percent? "))
                         if 1 <= percent <= 100:
-                            percent = percent / 100 + 1 if mod else 1 - percent / 100
+                            behaviour = percent / 100 + 1 if is_increase else 1 - percent / 100
                             break
                         print("Percentage must be int only and between 1 and 100!!")
                     except ValueError:
                         print("Please enter a valid integer number!")
-                cursor.execute("UPDATE products_anton_t SET price = price * %s", (percent,))
+                cursor.execute("UPDATE products_anton_t SET price = price * %s", (behaviour,))
                 conn.commit()
                 print('Prices updated.')
         except Exception as e:
