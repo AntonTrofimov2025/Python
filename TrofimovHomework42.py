@@ -26,19 +26,10 @@ Products after update:
 1. Notebook — $12.00
 2. Pencil — $1.20
 3. Bag — $30.00"""
-
-products = [
-    ("Notebook", 10.00),
-    ("Pencil", 1.00),
-    ("Bag", 25.00)
-]
-
 import os
 
 import pymysql
 from dotenv import load_dotenv
-
-load_dotenv(".env_edit")
 
 def is_increase():
     while True:
@@ -47,50 +38,62 @@ def is_increase():
             return mod == "i"
         print("Please choose between 'i' and 'd'")
 
-def behaviour(is_increase):
+def behaviour(inc_or_decr):
     while True:
         try:
             percent = int(input("By what percent? "))
             if 1 <= percent <= 100:
-                return percent / 100 + 1 if is_increase else 1 - percent / 100
+                return percent / 100 + 1 if inc_or_decr else 1 - percent / 100
             print("Percentage must be int only and between 1 and 100!!")
         except ValueError:
             print("Please enter a valid integer number!")
 
-with pymysql.connect(host = os.environ.get("DB_HOST", "localhost"),
-                     user = os.environ.get("DB_USER", "user"),
-                     password = os.environ.get("DB_PASSWORD", "password"),
-                     database = "market") as conn:
-    with conn.cursor() as cursor:
-        cursor.execute("""CREATE TABLE IF NOT EXISTS products_anton_t (
-                          id int auto_increment primary key,
-                          product_name varchar(50),
-                          price DECIMAL(10, 2)
-                          )""")
-        cursor.execute("DELETE FROM products_anton_t")
-        cursor.execute("ALTER TABLE products_anton_t AUTO_INCREMENT = 1")
-        print("All values in table products_anton_t have been hard reset!!")
-        cursor.executemany("""INSERT INTO products_anton_t (product_name, price) VALUES (%s, %s)""", products)
+def main():
 
-        try:
-            mass_price_update = input("Do you wanna update all prices? (y/n): ")
-            if mass_price_update.lower().strip() == "y":
-                your_choice = is_increase()
-                what_percent = behaviour(your_choice)
-                cursor.execute("UPDATE products_anton_t SET price = price * %s", (what_percent,))
-                conn.commit()
-                print('Prices updated.')
-        except Exception as e:
-            conn.rollback()
-            print(f"Something went wrong: {e}")
+    load_dotenv(".env_edit")
 
-        cursor.execute("SELECT * FROM products_anton_t")
-        all_data = cursor.fetchall()
+    with pymysql.connect(host = os.environ.get("DB_HOST", "localhost"),
+                         user = os.environ.get("DB_USER", "user"),
+                         password = os.environ.get("DB_PASSWORD", "password"),
+                         database = "market") as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("""CREATE TABLE IF NOT EXISTS products_anton_t (
+                              id int auto_increment primary key,
+                              product_name varchar(50),
+                              price DECIMAL(10, 2)
+                              )""")
+            cursor.execute("DELETE FROM products_anton_t")
+            cursor.execute("ALTER TABLE products_anton_t AUTO_INCREMENT = 1")
+            print("All values in table products_anton_t have been hard reset!!")
+            cursor.executemany("""INSERT INTO products_anton_t (product_name, price) VALUES (%s, %s)""", products)
 
-        print("Products added: ")
-        for _id, prod_name, price in all_data:
-            print(f"{_id}. {prod_name} - ${price}")
-        conn.commit()
+            try:
+                mass_price_update = input("Do you wanna update all prices? (y/n): ")
+                if mass_price_update.lower().strip() == "y":
+                    your_choice = is_increase()
+                    what_percent = behaviour(your_choice)
+                    cursor.execute("UPDATE products_anton_t SET price = price * %s", (what_percent,))
+                    conn.commit()
+                    print('Prices updated.')
+            except Exception as e:
+                conn.rollback()
+                print(f"Something went wrong: {e}")
+
+            cursor.execute("SELECT * FROM products_anton_t")
+            all_data = cursor.fetchall()
+
+            print("Products added: ")
+            for _id, prod_name, price in all_data:
+                print(f"{_id}. {prod_name} - ${price}")
+            conn.commit()
+
+if __name__ == "__main__":
+    products = [
+        ("Notebook", 10.00),
+        ("Pencil", 1.00),
+        ("Bag", 25.00)
+    ]
+    main()
 
 """1. Создание базы
 Напишите программу, которая:
