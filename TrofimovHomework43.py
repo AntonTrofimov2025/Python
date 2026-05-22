@@ -7,6 +7,7 @@
 {'_id': ObjectId('...'), 'id': 5, 'customer': 'Olga', 'product': 'Banana', 'amount':
 8, 'city': 'Madrid'}"""
 from pymongo import MongoClient
+from pymysql import connect
 
 client = MongoClient(
     "mongodb://ich_editor:verystrongpassword"
@@ -28,6 +29,7 @@ for order in orders.find({"amount": {"$lt": 10}}):
 
 found_orders = orders.find({"amount": {"$lt": 10}})
 
+"Var I"
 new_collection = db["orders_lesson_43_anton_t"]
 
 try:
@@ -38,6 +40,15 @@ except Exception as e:
     print("InvalidOperation:", e)
 
 # count = new_collection.count_documents({})
+
+"Var II"
+
+documents = {"amount": {"$lt": 10}}
+
+another_collection = orders.aggregate([{"$match": documents}, {"$out": "orders_lesson_43_anton_t_varII"}])
+print(f"{db['orders_lesson_43_anton_t_varII'].count_documents({})} documents inserted into 'orders_lesson_43_anton_t_varII'")
+
+client.close()
 
 """1. Добавление товаров
 Создайте программу, которая подключается к MongoDB и:
@@ -78,12 +89,13 @@ new_items = [{"name": "Pen", "price": 1.50, "stock": 4},
              {"name": "Backpack", "price": 25, "stock": 4}]
 
 res = products.insert_many(new_items)
-count = len(res.inserted_ids)
 
-print(f"{count} products inserted.")
+print(f"{len(res.inserted_ids)} products inserted.")
 
 updated_items = products.update_many({}, [{"$set": {"price": {"$round": [{"$multiply": ["$price", 1.2]}, 2]}}}])
 print(f"Prices updated for {updated_items.modified_count} products")
 
 res = products.find()
 print("Updated products:", *(f'- {doc["name"]} — ${doc["price"]:.2f}' for doc in res), sep="\n")
+
+client.close()
