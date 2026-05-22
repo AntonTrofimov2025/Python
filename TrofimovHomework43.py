@@ -7,7 +7,6 @@
 {'_id': ObjectId('...'), 'id': 5, 'customer': 'Olga', 'product': 'Banana', 'amount':
 8, 'city': 'Madrid'}"""
 from pymongo import MongoClient
-from pymysql import connect
 
 client = MongoClient(
     "mongodb://ich_editor:verystrongpassword"
