@@ -105,7 +105,7 @@ with pymysql.connect(
                     print(f'{_id}. {f_name} {l_name} — {j_title} — {salary}')
 
         else:
-            print(f"No employees found in this department.")
+            print(f"No employees found in selected department.")
 
 """1. Список сотрудников по убыванию зарплаты
 Добавьте к программе сортировку сотрудников выбранного департамента по убыванию зарплаты. Выведите имя,
