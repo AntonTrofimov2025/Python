@@ -86,4 +86,4 @@ updated_items = products.update_many({}, [{"$set": {"price": {"$round": [{"$mult
 print(f"Prices updated for {updated_items.modified_count} products")
 
 res = products.find()
-print("Updated products:", *(f"- {doc["name"]} — ${doc["price"]}" for doc in res), sep="\n")
+print("Updated products:", *(f'- {doc["name"]} — ${doc["price"]:.2f}' for doc in res), sep="\n")
