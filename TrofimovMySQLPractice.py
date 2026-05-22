@@ -21,6 +21,19 @@ with pymysql.connect(
         # print()
         while True:
             try:
+                show_dep = input("Show departments? (y/n): ")
+                if show_dep.lower().strip() == "y":
+                    cursor.execute("SELECT DENSE_RANK() OVER(ORDER BY department_id) as num, department_name from departments")
+                    print("List of departments: ", *(f"{num}. {department_name}" for num, department_name in cursor), sep="\n")
+                    break
+                elif show_dep.lower().strip() == "n":
+                    break
+                else:
+                    continue
+            except ValueError:
+                print("Use 'y' or 'n' only!!")
+        while True:
+            try:
                 your_department = int(input('Enter department number: '))
             except ValueError:
                 print("Invalid department number. Please try again.")
@@ -34,8 +47,40 @@ with pymysql.connect(
                 if department_exists:
                     break
                 print("Invalid department number. Please try again.")
-        # print(f"Your choice: {cursor.fetchone()[0]}")
-        cursor.execute("""SELECT ROW_NUMBER() OVER (order by e.salary DESC) AS row_num, e.first_name, e.last_name,
+        cursor.execute("""SELECT e.first_name
+                          FROM employees e
+                                   JOIN (SELECT DISTINCT dense_rank() over (order by department_id) as dep_rank, department_id
+                        from departments) rk ON e.department_id = rk.department_id
+                          where rk.dep_rank = %s""",
+                       (your_department,))
+        first_emp = cursor.fetchone()
+        condition = None
+        salary = 0
+        your_operator = ">="
+        filtering = ""
+        if first_emp is not None:
+            while True:
+                filtering = input("Would you like to filter employees by salary? (y/n): ").lower().strip()
+                if filtering in ("y", "n"):
+                    break
+                print("Use 'y' or 'n' only!!")
+        is_filter = filtering == "y"
+        if is_filter:
+            while True:
+                condition = input("Enter condition (>, <, =, >=, <=): ")
+                if condition in (">", "<", "=", ">=", "<="):
+                    # your_operator = ">" if condition == ">" else ("<" if condition == "<" else (
+                    #     "=" if condition == "=" else (">=" if condition == ">=" else "<=")))
+                    your_operator = condition
+                    break
+                print("Use indicated operators only!!")
+            while True:
+                try:
+                    salary = float(input("Enter salary: "))
+                    break
+                except ValueError:
+                    print("Please use numbers only.")
+        cursor.execute(f"""SELECT ROW_NUMBER() OVER (order by e.salary DESC) AS row_num, e.first_name, e.last_name,
                         j.job_title, e.salary, d.department_name, d.department_id
                         FROM
                             hr.departments d
@@ -46,47 +91,23 @@ with pymysql.connect(
                                 JOIN
                             (select department_id, dense_rank() over (order by department_id) as dep_rank from hr.departments)
                             as dr ON d.department_id = dr.department_id
-                        WHERE dr.dep_rank = %s
-                        ORDER BY e.salary DESC""", (your_department, ) )
+                        WHERE dr.dep_rank = %s and e.salary {your_operator} %s
+                        ORDER BY e.salary DESC""", (your_department, salary) )
         all_data = cursor.fetchall()
         if all_data:
-            print(f"Your choice: {all_data[0][5]}")
-            print(f"No employees found in {all_data[0][5]} department.") if all_data[0][1] is None else ...
-            filtering = input("Would you like to filter employees by salary? (y/n): ") if all_data[0][1] is not None else ""
-            condition = None
-            salary = None
-            is_filter = filtering.lower().strip() != "y"
-            if not is_filter:
-                while True:
-                    condition = input("Enter condition (>, <, =, >=, <=): ")
-                    if condition in (">", "<", "=", ">=", "<="):
-                        break
-                    print("Use indicated operators only!!")
-                while True:
-                    try:
-                        salary = float(input("Enter salary: "))
-                        break
-                    except ValueError:
-                        print("Please use numbers only.")
-            for employee in all_data:
-                if condition == ">" and employee[4] > salary:
-                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                elif condition == "<" and employee[4] < salary:
-                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                elif condition == ">=" and employee[4] >= salary:
-                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                elif condition == "<=" and employee[4] <= salary:
-                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                elif condition == "=" and employee[4] == salary:
-                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
-                elif is_filter:
-                    print(f'{employee[0]}. {employee[1]} {employee[2]} — {employee[3]} — {employee[4]}')
+            first_employee_department = all_data[0][5]
+            first_employee_name = all_data[0][1]
+            print(f"Your choice: {first_employee_department}")
+            # print(f"No employees found in {first_employee_department} department.") if first_employee_name is None else ...
+
+            if first_employee_name:
+                for _id, f_name, l_name, j_title, salary, _, _ in all_data:
+                    print(f'{_id}. {f_name} {l_name} — {j_title} — {salary}')
 
         else:
-            print("Department empty or not found or doesn't exist.")
+            print(f"No employees found in this department.")
 
-"""1. Список сотрудников по убыванию
-зарплаты
+"""1. Список сотрудников по убыванию зарплаты
 Добавьте к программе сортировку сотрудников выбранного департамента по убыванию зарплаты. Выведите имя,
 фамилию, должность и зарплату каждого сотрудника, начиная с самого высокооплачиваемого. Также добавьте
 нумерацию (не id).
