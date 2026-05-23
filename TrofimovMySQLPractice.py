@@ -56,7 +56,6 @@ with pymysql.connect(
         first_emp = cursor.fetchone()
         first_emp_name = first_emp[0]
         first_emp_dep = first_emp[2]
-        condition = None
         salary = None
         your_operator = "is"
         filtering = ""
