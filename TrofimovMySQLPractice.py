@@ -81,6 +81,9 @@ with pymysql.connect(
                     break
                 except ValueError:
                     print("Please use numbers only.")
+        else:
+            salary = 0
+            your_operator = ">="
         cursor.execute(f"""SELECT ROW_NUMBER() OVER (order by e.salary DESC) AS row_num, e.first_name, e.last_name,
                         j.job_title, e.salary, d.department_name, d.department_id
                         FROM
