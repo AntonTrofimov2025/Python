@@ -47,18 +47,20 @@ with pymysql.connect(
                 if department_exists:
                     break
                 print("Invalid department number. Please try again.")
-        cursor.execute("""SELECT e.first_name
+        cursor.execute("""SELECT DISTINCT e.first_name, rk.dep_rank, rk.department_name
                           FROM employees e
-                                   JOIN (SELECT DISTINCT dense_rank() over (order by department_id) as dep_rank, department_id
-                        from departments) rk ON e.department_id = rk.department_id
+                                   RIGHT JOIN (SELECT dense_rank() over (order by department_id) as dep_rank, department_id, department_name
+                                               from departments) rk ON e.department_id = rk.department_id
                           where rk.dep_rank = %s""",
                        (your_department,))
         first_emp = cursor.fetchone()
+        first_emp_name = first_emp[0]
+        first_emp_dep = first_emp[2]
         condition = None
         salary = 0
         your_operator = ">="
         filtering = ""
-        if first_emp is not None:
+        if first_emp_name:
             while True:
                 filtering = input("Would you like to filter employees by salary? (y/n): ").lower().strip()
                 if filtering in ("y", "n"):
@@ -94,18 +96,17 @@ with pymysql.connect(
                         WHERE dr.dep_rank = %s and e.salary {your_operator} %s
                         ORDER BY e.salary DESC""", (your_department, salary) )
         all_data = cursor.fetchall()
-        if all_data:
-            first_employee_department = all_data[0][5]
-            first_employee_name = all_data[0][1]
-            print(f"Your choice: {first_employee_department}")
-            # print(f"No employees found in {first_employee_department} department.") if first_employee_name is None else ...
 
+        if all_data:
+            first_employee_name = all_data[0][1]
+            print(f"Your choice: {first_emp_dep}")
             if first_employee_name:
                 for _id, f_name, l_name, j_title, salary, _, _ in all_data:
                     print(f'{_id}. {f_name} {l_name} — {j_title} — {salary}')
 
         else:
-            print(f"No employees found in selected department.")
+            print(f"Your choice: {first_emp_dep}")
+            print(f"No employees found in {first_emp_dep} department.")
 
 """1. Список сотрудников по убыванию зарплаты
 Добавьте к программе сортировку сотрудников выбранного департамента по убыванию зарплаты. Выведите имя,
