@@ -38,9 +38,9 @@ with pymysql.connect(
             except ValueError:
                 print("Invalid department number. Please try again.")
             else:
-                cursor.execute("""SELECT d.department_name FROM hr.departments d
+                cursor.execute("""SELECT d.department_name FROM departments d
                                   JOIN
-                                    (select department_id, dense_rank() over (order by department_id) as dep_rank from hr.departments)
+                                    (select department_id, dense_rank() over (order by department_id) as dep_rank from departments)
                                     as dr ON d.department_id = dr.department_id
                                   WHERE dr.dep_rank = %s""", (your_department, ))
                 department_exists = cursor.fetchone()
@@ -57,8 +57,8 @@ with pymysql.connect(
         first_emp_name = first_emp[0]
         first_emp_dep = first_emp[2]
         condition = None
-        salary = 0
-        your_operator = ">="
+        salary = None
+        your_operator = "is"
         filtering = ""
         if first_emp_name:
             while True:
@@ -85,23 +85,23 @@ with pymysql.connect(
         cursor.execute(f"""SELECT ROW_NUMBER() OVER (order by e.salary DESC) AS row_num, e.first_name, e.last_name,
                         j.job_title, e.salary, d.department_name, d.department_id
                         FROM
-                            hr.departments d
+                            departments d
                                 LEFT JOIN
-                            hr.employees e ON d.department_id = e.department_id
+                            employees e ON d.department_id = e.department_id
                                 LEFT JOIN
-                            hr.jobs j ON e.job_id = j.job_id
+                            jobs j ON e.job_id = j.job_id
                                 JOIN
-                            (select department_id, dense_rank() over (order by department_id) as dep_rank from hr.departments)
+                            (select department_id, dense_rank() over (order by department_id) as dep_rank from departments)
                             as dr ON d.department_id = dr.department_id
                         WHERE dr.dep_rank = %s and e.salary {your_operator} %s
                         ORDER BY e.salary DESC""", (your_department, salary) )
         all_data = cursor.fetchall()
-
+        first_employee_name = None
         if all_data:
             first_employee_name = all_data[0][1]
+        if first_employee_name:
             print(f"Your choice: {first_emp_dep}")
-            if first_employee_name:
-                for _id, f_name, l_name, j_title, salary, _, _ in all_data:
+            for _id, f_name, l_name, j_title, salary, _, _ in all_data:
                     print(f'{_id}. {f_name} {l_name} — {j_title} — {salary}')
 
         else:
